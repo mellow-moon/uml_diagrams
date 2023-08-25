@@ -1,0 +1,51 @@
+@startuml classes
+title Схема взаимодействия клиентов с заказами
+
+class "Клиент" as Client{
+    Имя
+    Адрес
+    +Кредитный рейтинг()
+}
+
+class "Корпоративный клиент" as CorporateClient{
+    Контактное лицо
+    Кредитный рейтинг
+    Кредитный лимит
+    +Счет()
+}
+
+class "Частный клиент" as PrivateClient{
+    Номер кредитной карты
+}
+
+Client <|-- CorporateClient
+Client <|-- PrivateClient
+
+class "Заказ" as Order{
+    Дата получения
+    Проплачен
+    Номер
+    Цена
+    +Закрыть()
+    +Отправить()
+}
+
+Client -r- Order
+
+class "Строка заказа" as OrderRow{
+    Наименование
+    Количество
+    Цена
+}
+
+Order o-- OrderRow
+
+class "Товар" as Item{
+    Наименование
+    Цвет
+    Размер
+}
+
+Item <.r. OrderRow
+
+@enduml

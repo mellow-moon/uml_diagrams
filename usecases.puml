@@ -1,0 +1,49 @@
+@startuml usecases
+title Система аренды автомобилей
+
+left to right direction
+
+actor "Гость" as Guest
+usecase "Регистрация" as Registration
+usecase "Редактирование профиля пользователя" as EditProfile
+Registration ..> EditProfile : include
+
+Guest --> Registration
+
+actor "Пользователь" as Customer
+usecase "Вход в систему" as Login
+usecase "Поиск автомобиля" as SearchCar
+usecase "Выбор автомобиля" as SelectCar
+usecase "Бронирование автомобиля" as Reservation
+
+usecase "Оплата счета" as BillPayment
+
+Customer --> Login
+Customer --> SearchCar
+Customer --> SelectCar
+Customer --> Reservation
+Customer --> EditProfile
+
+Customer --> BillPayment
+
+actor "Сотрудник сервиса" as Employee
+actor "Менеджер" as Manager
+Manager -left-|> Employee
+
+usecase "Обновление информации об автомобилях" as MaintainCarsInformation
+usecase "Просмотр отчета за день" as ViewDailyReport
+usecase "Просмотр отчета за месяц" as ViewMonthlyReport
+usecase "Выставление счета" as GenerateBill
+
+Employee --> MaintainCarsInformation
+Employee --> ViewDailyReport
+Employee --> GenerateBill
+Employee --> Login
+
+Manager --> ViewMonthlyReport
+
+actor "Банк" as Bank
+
+Bank --> BillPayment
+
+@enduml

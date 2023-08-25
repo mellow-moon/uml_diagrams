@@ -1,0 +1,34 @@
+@startuml sequence
+title Покупка товара в интернет-магазине
+
+actor "Пользователь" as User
+participant "Интерфейс" as Interface
+participant "Система интернет-магазина" as ShopSystem
+participant "Платёжная система" as PaySystem
+
+User -> Interface++ : Добавить товар в корзину
+Interface -> ShopSystem++ : Добавить товар в корзину
+ShopSystem --> Interface-- : Товар добавлен в корзину
+Interface --> User : Товар добавлен в корзину
+
+User -> Interface : Оплатить заказ
+
+Interface -> ShopSystem++ : Оплатить товар
+ShopSystem -> ShopSystem : Создать заказ
+activate ShopSystem
+deactivate ShopSystem
+ShopSystem --> Interface-- : Параметры оплаты заказа
+
+Interface --> User : Счет на оплату
+
+User -> Interface : Ввести данные банковской карты
+Interface -> ShopSystem++ : Данные банковской карты
+ShopSystem -> PaySystem++ : Данные банковской карты
+PaySystem -> PaySystem : Проведение платежа
+activate PaySystem
+deactivate PaySystem
+PaySystem --> ShopSystem-- : Статус оплаты
+ShopSystem --> Interface-- : Статус оплаты заказа
+Interface --> User-- : Статус оплаты заказа
+
+@enduml
